@@ -9,6 +9,12 @@ import java.util.List;
 public class BusinessDAO extends AbstractDAO<Business> implements IBusinessDAO {
 
 	@Override
+	public List<Business> findAll() {
+		String sql = "SELECT * FROM business";
+		return query(sql,new BusinessMapper());
+	}
+
+	@Override
 	public String save(Business business) {
 		// TODO Auto-generated method stub
 		System.out.println(business.getBusinessName());

@@ -5,8 +5,10 @@ import models.Business;
 import repositories.IBusinessRepository;
 import utils.exceptions.dbExceptipns.CreateFailedException;
 import utils.exceptions.dbExceptipns.DuplicateEntryException;
+import utils.exceptions.dbExceptipns.NotFoundException;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class BusinessRepository implements IBusinessRepository {
 	@Inject
@@ -20,6 +22,13 @@ public class BusinessRepository implements IBusinessRepository {
 		if (id == null) throw new CreateFailedException("Create Business Failed");
 		return ;
 		
+	}
+
+	@Override
+	public List<Business> findAll() throws NotFoundException {
+		List<Business> businesses = businessDAO.findAll();
+		if (businesses == null) throw new NotFoundException("Not Found Business");
+		return businesses;
 	}
 
 }

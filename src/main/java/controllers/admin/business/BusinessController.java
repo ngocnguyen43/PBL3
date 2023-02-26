@@ -1,6 +1,7 @@
 package controllers.admin.business;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import config.ResponseConfig;
 import dtos.BusinessDTO;
 import services.IBusinessService;
 import utils.helper.Helper;
@@ -23,8 +24,14 @@ public class BusinessController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        File directory = new File(".");
-        System.out.println(directory.getCanonicalPath());
+        ResponseConfig.ConfigHeader(resp);
+        ObjectMapper obj = new ObjectMapper();
+        PrintWriter out = resp.getWriter();
+        Message message = businessService.getAllBusiness();
+        String json = obj.writeValueAsString(message);
+        resp.setStatus(message.getMeta().getStatusCode());
+        out.print(json);
+        out.flush();
     }
 
     @Override
